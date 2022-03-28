@@ -13,15 +13,12 @@ const __dirname = dirname(__filename)
 const root = process.cwd()
 const isProd = process.env.NODE_ENV === 'production'
 
-// app.listen(3000, () => {
-//   console.log('http://localhost:3000')
-// }),
-console.log('app start')
+console.log('app start', isProd)
 
 export const createAppServer = async () => {
 
   const resolve = (p:string) => path.resolve(__dirname, p)
-  const manifest = isProd ? require('../web/ssr-manifest.json') : {}
+  const manifest = isProd ? require('./client/ssr-manifest.json') : {}
 
   let app;
   let vite:any;
@@ -48,7 +45,7 @@ export const createAppServer = async () => {
     app = express();
     app.use(compression())
     app.use(
-        ServeStatic(resolve('../web'), {
+        ServeStatic(resolve('./client'), {
             index: false,
         }),
     )
@@ -73,8 +70,8 @@ export const createAppServer = async () => {
         template = await vite.transformIndexHtml(url, template)
         render = (await vite.ssrLoadModule(resolve('../src/entry-server.js'))).render
       } else {
-        template = fs.readFileSync(resolve('../web/index/index.html'), 'utf-8')
-        render = require('../web/entry-server.js').render
+        template = fs.readFileSync(resolve('./client/index.html'), 'utf-8')
+        render = require('./server/entry-server.js').render
       }
 
       const [appHead, appHtml, preloadLinks] = await render(url, manifest)
@@ -95,4 +92,13 @@ export const createAppServer = async () => {
 
   console.log('use app')
   return app;
+}
+
+if (isProd) {
+  (async () => {
+    const app = await createAppServer();
+    app.listen(3e3, () => {
+      console.log("http://localhost:3000");
+    });
+  })()
 }

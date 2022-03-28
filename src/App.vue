@@ -1,9 +1,11 @@
 <template>
+  <div>
     <router-view v-slot="{ Component }">
         <Suspense>
-            <component :is="Component" />
+          <component :is="Component" />
         </Suspense>
-    </router-view>
+      </router-view>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'

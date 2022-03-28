@@ -27,7 +27,7 @@ export function createRouter() {
             children: [
                 {
                     path: '',
-                    name: 'Index',
+                    name: 'Admin-Index',
                     component: () => import('../views/admin/index.vue'),
                 }
             ],
