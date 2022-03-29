@@ -3,6 +3,7 @@
         <p class="title">{{ title }}</p>
         <div class="desc" v-html="content"></div>
         <div class="env">环境变量：{{ env }}</div>
+        <div class="env">环境MODE：{{ mode }}</div>
     </div>
 </template>
 
@@ -18,7 +19,8 @@ export default defineComponent({
         return {
             title: '这是个标题 ',
             content: '<p>这是内容</p>',
-            env: process.env.db_url,
+            mode: import.meta.env.MODE,
+            env: import.meta.env.VITE_APP_NAME,
         }
     },
 })

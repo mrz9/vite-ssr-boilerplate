@@ -4,7 +4,8 @@ import compression from 'compression'
 import ServeStatic from 'serve-static'
 import { createRequire } from 'module'
 import path from 'path'
-import { root, __dirname, __filename } from './config'
+import { root } from './config'
+import router from '../controller'
 
 const require = createRequire(import.meta.url)
 const { createServer } = require('vite')
@@ -18,8 +19,10 @@ const resolve = (p: string) => path.resolve(root, p)
 export const createAppServer = async () => {
     const manifest = isProd ? require('./client/ssr-manifest.json') : {}
 
-    let app
     let vite: any
+    const app = express()
+    app.use('/config', router)
+
     if (!isProd) {
         /**
          * @type {import('vite').ViteDevServer}
@@ -37,10 +40,8 @@ export const createAppServer = async () => {
                 },
             },
         })
-        app = express()
         app.use(vite.middlewares)
     } else {
-        app = express()
         app.use(compression())
         app.use(
             ServeStatic(resolve('./client'), {
