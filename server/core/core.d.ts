@@ -9,6 +9,8 @@ declare namespace Express {
         root: string
         __dirname: string
         __filename: string
+        isProd: boolean
+        logger: winston.Logger
     }
     interface Response {
         error: (messageOrOptions: TmessageOrOptions) => void

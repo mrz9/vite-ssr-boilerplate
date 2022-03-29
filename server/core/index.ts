@@ -1,11 +1,14 @@
 import express from 'express'
 import fs from 'fs'
+import cookieSession from 'cookie-session'
+import bodyParser from 'body-parser'
 import compression from 'compression'
 import ServeStatic from 'serve-static'
 import { createRequire } from 'module'
 import path from 'path'
 import { root, __filename, __dirname } from './config'
 import Controller from './controller'
+import { AccessLogger, ErrorLogger, AppLogger } from './logger'
 
 const require = createRequire(import.meta.url)
 const { createServer } = require('vite')
@@ -17,16 +20,34 @@ console.log('app start', isProd)
 const resolve = (p: string) => path.resolve(root, p)
 
 export const createAppServer = async () => {
-    const manifest = isProd ? require('./client/ssr-manifest.json') : {}
-
-    let vite: any
     const app = express()
     app.__dirname = __dirname
     app.__filename = __filename
     app.root = root
+    app.isProd = isProd
+
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({ extended: false }))
+
+    // parse application/json
+    app.use(bodyParser.json())
+
+    app.use(
+        cookieSession({
+            maxAge: 24 * 3600 * 1000, // 1天
+            // maxAge: 60 * 1000, // 1 min for debug
+            name: 'AGC_SESS',
+            httpOnly: true,
+            secret: `APP_1629092963380_9701`,
+        }),
+    )
+    app.logger = AppLogger(app)
+    // 请求日志
+    AccessLogger(app)
     // 注册路由
     Controller(app)
 
+    let vite: any
     if (!isProd) {
         /**
          * @type {import('vite').ViteDevServer}
@@ -73,6 +94,8 @@ export const createAppServer = async () => {
                 render = require('./server/entry-server.js').render
             }
 
+            const manifest = isProd ? require('./client/ssr-manifest.json') : {}
+
             const [appHead, appHtml, preloadLinks] = await render(url, manifest)
 
             const html = template
@@ -88,5 +111,7 @@ export const createAppServer = async () => {
         }
     })
 
+    // 错误日志
+    ErrorLogger(app)
     return app
 }

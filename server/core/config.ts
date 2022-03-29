@@ -7,13 +7,7 @@ export const __dirname = dirname(__filename)
 export const root = process.cwd()
 
 // 环境变量
-console.log(
-    '===== APP_MODE ====',
-    process.env.APP_MODE,
-    __filename,
-    __dirname,
-    root,
-)
+console.log('===== APP_MODE ====', process.env.APP_MODE)
 
 config({
     path: `.env`,
