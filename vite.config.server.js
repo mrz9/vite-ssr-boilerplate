@@ -1,7 +1,6 @@
-import { defineConfig } from 'vite'
-import ViteSSRPlugin from './plugin/viteSSR'
+const ViteSSRPlugin = require('./plugin/viteSSR.js')
 // https://vitejs.dev/config/
-export default defineConfig({
+module.exports = {
   build: {
     outDir: 'dist/web_agc'
   },
@@ -11,4 +10,4 @@ export default defineConfig({
       exportName: 'createAppServer',
     }),
   ],
-})
+}

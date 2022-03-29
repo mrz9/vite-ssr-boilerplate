@@ -7,11 +7,25 @@ const require = createRequire(import.meta.url)
 const {createServer} = require('vite')
 import path, {dirname} from 'path'
 import { fileURLToPath } from 'url'
+import { config } from 'dotenv'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const root = process.cwd()
 const isProd = process.env.NODE_ENV === 'production'
+
+// 环境变量
+console.log('===== APP_MODE ====', process.env.APP_MODE)
+
+config({
+    path: `.env`,
+})
+if (['pre', 'pub'].indexOf(process.env.APP_MODE ?? '') !== -1) {
+  config({
+      path: `.env.${process.env.APP_MODE}`,
+  })
+}
 
 console.log('app start', isProd)
 
