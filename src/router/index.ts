@@ -1,4 +1,9 @@
-import { RouteRecordRaw, createRouter as _createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
+import {
+    RouteRecordRaw,
+    createRouter as _createRouter,
+    createWebHistory,
+    createMemoryHistory,
+} from 'vue-router'
 import Layout from '@/layout/default.vue'
 import Admin from '@/layout/admin.vue'
 export function createRouter() {
@@ -17,7 +22,7 @@ export function createRouter() {
                     path: 'about',
                     name: 'About',
                     component: () => import('../views/web/about.vue'),
-                }
+                },
             ],
         },
         {
@@ -29,9 +34,9 @@ export function createRouter() {
                     path: '',
                     name: 'Admin-Index',
                     component: () => import('../views/admin/index.vue'),
-                }
+                },
             ],
-        }
+        },
     ]
 
     const router = _createRouter({

@@ -2,6 +2,7 @@
     <div class="container about">
         <p class="title">{{ title }}</p>
         <div class="desc" v-html="content"></div>
+        <div class="env">环境变量：{{ env }}</div>
     </div>
 </template>
 
@@ -11,12 +12,13 @@ import { useHead } from '@vueuse/head'
 
 export default defineComponent({
     async setup() {
-      useHead({
+        useHead({
             title: `Index - AGC`,
         })
         return {
             title: '这是个标题 ',
-            content: '<p>这是内容</p>'
+            content: '<p>这是内容</p>',
+            env: process.env.db_url,
         }
     },
 })

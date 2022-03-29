@@ -16,7 +16,7 @@ export default defineComponent({
         })
         return {
             title: '关于我们 ',
-            content: '<p>这是内容</p>'
+            content: '<p>这是内容</p>',
         }
     },
 })

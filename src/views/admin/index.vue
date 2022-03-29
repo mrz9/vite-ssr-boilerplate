@@ -11,14 +11,14 @@ import { useHead } from '@vueuse/head'
 
 export default defineComponent({
     setup() {
-      useHead({
-        title: `Admin - AGC`,
-      })
+        useHead({
+            title: `Admin - AGC`,
+        })
     },
     data: () => ({
-      title: '这是个标题- 管理端 ',
-      content: '<p>这是内容</p>'
-    })
+        title: '这是个标题- 管理端 ',
+        content: '<p>这是内容</p>',
+    }),
 })
 </script>
 <style scoped>
