@@ -6,4 +6,5 @@ const router = express.Router()
 router.get('/env', async (req, res) => {
     res.json(process.env)
 })
+
 export default router

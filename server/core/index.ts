@@ -4,8 +4,8 @@ import compression from 'compression'
 import ServeStatic from 'serve-static'
 import { createRequire } from 'module'
 import path from 'path'
-import { root } from './config'
-import router from '../controller'
+import { root, __filename, __dirname } from './config'
+import Controller from './controller'
 
 const require = createRequire(import.meta.url)
 const { createServer } = require('vite')
@@ -21,7 +21,11 @@ export const createAppServer = async () => {
 
     let vite: any
     const app = express()
-    app.use('/config', router)
+    app.__dirname = __dirname
+    app.__filename = __filename
+    app.root = root
+    // 注册路由
+    Controller(app)
 
     if (!isProd) {
         /**
