@@ -1,9 +1,13 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { resolve } = require('path')
 const ViteSSRPlugin = require('./plugin/viteSSR.js')
 // https://vitejs.dev/config/
 module.exports = {
-    build: {
-        outDir: 'dist/web_agc',
+    resolve: {
+        alias: {
+            '~': resolve('./server'),
+            '@': resolve('./server'),
+        },
     },
     plugins: [
         ViteSSRPlugin({
