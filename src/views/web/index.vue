@@ -2,8 +2,6 @@
     <div class="container about">
         <p class="title">{{ title }}</p>
         <div class="desc" v-html="content"></div>
-        <div class="env">环境变量：{{ env }}</div>
-        <div class="env">环境MODE：{{ mode }}</div>
     </div>
 </template>
 
@@ -14,13 +12,11 @@ import { useHead } from '@vueuse/head'
 export default defineComponent({
     async setup() {
         useHead({
-            title: `Index - AGC`,
+            title: `Index - ${import.meta.env.VITE_PAGE_TITLE}`,
         })
         return {
             title: '这是个标题 ',
             content: '<p>这是内容</p>',
-            mode: import.meta.env.MODE,
-            env: import.meta.env.VITE_APP_NAME,
         }
     },
 })

@@ -31,14 +31,13 @@ export const createAppServer = async () => {
 
     // parse application/json
     app.use(bodyParser.json())
-
     app.use(
         cookieSession({
-            maxAge: 24 * 3600 * 1000, // 1天
+            maxAge: Number(process.env.SESSION_MAXAGE), // 1天
             // maxAge: 60 * 1000, // 1 min for debug
-            name: 'AGC_SESS',
+            name: process.env.SESSION_NAME,
             httpOnly: true,
-            secret: `APP_1629092963380_9701`,
+            secret: process.env.SESSION_SECRET,
         }),
     )
     app.logger = AppLogger(app)

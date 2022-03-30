@@ -6,9 +6,12 @@ const router = express.Router()
 router.get('/env', async (req, res) => {
     req.app.logger.info('CHILL WINSTON!', {
         msg: 'custom app logger',
-        db_url: process.env.db_url,
     })
-    res.json(process.env)
+    res.json({
+        VITE_PAGE_TITLE: process.env.VITE_PAGE_TITLE,
+        SESSION_MAXAGE: process.env.SESSION_MAXAGE,
+        DATABASE_URL: process.env.DATABASE_URL,
+    })
 })
 
 export default router

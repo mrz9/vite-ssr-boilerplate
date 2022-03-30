@@ -14,7 +14,7 @@ import { useHead } from '@vueuse/head'
 export default defineComponent({
     setup() {
         useHead({
-            title: 'AGC Web',
+            title: `AGC Web | ${import.meta.env.VITE_PAGE_TITLE}`,
             meta: [
                 {
                     name: `description`,
