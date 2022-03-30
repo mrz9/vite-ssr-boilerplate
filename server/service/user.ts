@@ -1,4 +1,4 @@
-import { prisma } from '../prisma'
+import { prisma } from '@server/prisma'
 
 /**
  * 获取用户详情

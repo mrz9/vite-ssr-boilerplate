@@ -5,8 +5,7 @@ const ViteSSRPlugin = require('./plugin/viteSSR.js')
 module.exports = {
     resolve: {
         alias: {
-            '~': resolve('./server'),
-            '@': resolve('./server'),
+            '@server': resolve('./server'),
         },
     },
     plugins: [

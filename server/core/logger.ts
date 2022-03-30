@@ -38,7 +38,12 @@ const winstonLogOption = {
                 seconds: Math.floor(res.responseTime / 1000),
                 nanos: (res.responseTime % 1000) * 1000000,
             }
-            if (res.body) {
+            const isJSON =
+                (res.get('Content-Type') ?? '')
+                    .toLocaleLowerCase()
+                    .indexOf('application/json') !== -1
+
+            if (res.body && isJSON) {
                 if (typeof res.body === 'object') {
                     httpResponse.size = JSON.stringify(res.body).length
                 } else if (typeof res.body === 'string') {

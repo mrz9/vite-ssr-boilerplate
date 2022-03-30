@@ -1,5 +1,5 @@
 import express from 'express'
-import { get } from '../../service/user'
+import { get } from '@server/service/user'
 const router = express.Router()
 /**
  * 添加

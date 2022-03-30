@@ -43,6 +43,9 @@ const clientBuildOptions = {
 
 const appServerBuildOptions = {
     configFile: './vite.config.server.js',
+    build: {
+        outDir: path.resolve(distDir),
+    },
 }
 
 function copyDeployFile() {
